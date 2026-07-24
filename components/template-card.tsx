@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import { autoFixForDarkMode } from "@/lib/contrast";
 
 interface TemplateCardProps {
   template: SignatureTemplate;
@@ -91,14 +92,33 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
       ? (profile.pronounsEn || profile.pronouns || "He / Him")
       : (profile.pronounsEs || profile.pronouns || "Él / Him");
 
+    // Resolve high-contrast colors in email dark mode
+    let effectiveTextColor = profile.textColor || "#1e293b";
+    let effectiveSecondaryColor = profile.secondaryColor || "#64748b";
+    let effectivePrimaryColor = profile.primaryColor || "#2563eb";
+
+    if (isEmailDarkMode) {
+      if (effectiveTextColor === "#1e293b" || effectiveTextColor === "#0f172a") {
+        effectiveTextColor = "#f8fafc";
+      }
+      if (effectiveSecondaryColor === "#64748b" || effectiveSecondaryColor === "#475569") {
+        effectiveSecondaryColor = "#cbd5e1";
+      }
+      // Automatically boost primary accent color lightness to guarantee >= 4.5:1 contrast against #1e1e1e!
+      effectivePrimaryColor = autoFixForDarkMode(effectivePrimaryColor);
+    }
+
     return {
       ...profile,
       language: cardLanguage,
       statusBadge: badge,
       disclaimer: disc,
       pronouns: pronounsVal,
+      textColor: effectiveTextColor,
+      secondaryColor: effectiveSecondaryColor,
+      primaryColor: effectivePrimaryColor,
     };
-  }, [profile, cardLanguage]);
+  }, [profile, cardLanguage, isEmailDarkMode]);
 
   const renderedHtml = template.renderHtml(effectiveProfile);
   const renderedText = template.renderText(effectiveProfile);

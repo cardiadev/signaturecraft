@@ -20,10 +20,13 @@ import {
   Download,
   Upload,
   RotateCcw,
+  AlertTriangle,
+  CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Locale, translations } from "@/lib/i18n";
 import { Kbd } from "@/components/ui/kbd";
+import { isDarkModeCompliant, getContrastRatio, autoFixForDarkMode } from "@/lib/contrast";
 
 interface SignatureFormProps {
   profile: SignatureProfile;
@@ -798,6 +801,49 @@ export function SignatureForm({
                   </div>
                 </div>
               </div>
+
+              {/* Dynamic WCAG Dark Mode Contrast Audit & Auto-Adjust Banner */}
+              {(() => {
+                const primaryHex = profile.primaryColor || "#2563eb";
+                const isCompliant = isDarkModeCompliant(primaryHex);
+                const primaryContrastRatio = getContrastRatio(primaryHex, "#1e1e1e");
+                return isCompliant ? (
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>
+                      {appLocale === "es"
+                        ? `Contraste Óptimo (Ratio ${primaryContrastRatio}:1 vs Modo Oscuro)`
+                        : `Optimal Contrast (Ratio ${primaryContrastRatio}:1 vs Dark Mode)`}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-2.5 rounded-xl border bg-amber-50 border-amber-200 text-amber-900">
+                    <div className="flex items-center gap-1.5 text-[11px] font-semibold">
+                      <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                      <span>
+                        {appLocale === "es"
+                          ? `Bajo contraste en Modo Oscuro (Ratio ${primaryContrastRatio}:1 < 4.5:1)`
+                          : `Low contrast in Dark Mode (Ratio ${primaryContrastRatio}:1 < 4.5:1)`}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const fixed = autoFixForDarkMode(primaryHex);
+                        updateField("primaryColor", fixed);
+                        toast.success(
+                          appLocale === "es"
+                            ? "Tono ajustado para alto contraste en Modo Oscuro"
+                            : "Color adjusted for high contrast in Dark Mode"
+                        );
+                      }}
+                      className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-amber-600 hover:bg-amber-700 text-white shadow-2xs transition-colors whitespace-nowrap cursor-pointer"
+                    >
+                      {appLocale === "es" ? "Auto-Ajustar Tono" : "Auto-Adjust Hue"}
+                    </button>
+                  </div>
+                );
+              })()}
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">

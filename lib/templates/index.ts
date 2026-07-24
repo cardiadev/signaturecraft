@@ -103,7 +103,7 @@ function renderSocialLinks(data: SignatureProfile): string {
       </span>
     `);
   }
-  return links.join('<span class="sig-sep" style="color: #cbd5e1; font-weight: normal; margin: 0 8px;">|</span>');
+  return links.join(`<span class="sig-sep" style="color: ${data.secondaryColor}; font-weight: normal; margin: 0 8px;">|</span>`);
 }
 
 /**
@@ -112,7 +112,7 @@ function renderSocialLinks(data: SignatureProfile): string {
 function renderStatusBadgeHtml(data: SignatureProfile): string {
   if (!data.statusBadge) return "";
   return `
-    <div style="margin-top: 6px; font-size: 11px; color: #059669; font-weight: 700; letter-spacing: 0.2px;">
+    <div style="margin-top: 6px; font-size: 11px; color: #10b981; font-weight: 700; letter-spacing: 0.2px;">
       ${data.statusBadge}
     </div>
   `;
@@ -124,7 +124,7 @@ function renderStatusBadgeHtml(data: SignatureProfile): string {
 function renderDisclaimerHtml(data: SignatureProfile): string {
   if (!data.disclaimer) return "";
   return `
-    <div style="margin-top: 10px; padding-top: 6px; border-top: 1px dashed #e2e8f0; font-size: 10px; color: #94a3b8; line-height: 1.35;">
+    <div style="margin-top: 10px; padding-top: 6px; border-top: 1px dashed ${data.secondaryColor}; font-size: 10px; color: ${data.secondaryColor}; line-height: 1.35; opacity: 0.85;">
       ${data.disclaimer}
     </div>
   `;
@@ -152,7 +152,7 @@ ${RESPONSIVE_EMAIL_CSS}
     </td>
   </tr>
   <tr>
-    <td style="padding-bottom: 10px; border-bottom: 1px solid #e2e8f0;">
+    <td style="padding-bottom: 10px; border-bottom: 1px solid ${d.secondaryColor};">
       <!-- Desktop Horizontal Row & Mobile Responsive Stacking -->
       <div style="font-size: 12px; color: ${d.secondaryColor}; line-height: 1.6;">
         ${d.email ? `<span class="sig-item" style="display: inline-block; margin-right: 16px; white-space: nowrap;"><span style="color: ${d.primaryColor}; font-weight: 700;">E:</span> ${renderEmailLink(d.email, d.textColor)}</span>` : ""}
@@ -160,7 +160,7 @@ ${RESPONSIVE_EMAIL_CSS}
         ${d.mobile ? `<span class="sig-item" style="display: inline-block; margin-right: 16px; white-space: nowrap;"><span style="color: ${d.primaryColor}; font-weight: 700;">M:</span> ${renderMobileLink(d.mobile, d.textColor)}</span>` : ""}
         ${d.website ? `<span class="sig-item" style="display: inline-block; white-space: nowrap;"><span style="color: ${d.primaryColor}; font-weight: 700;">W:</span> ${renderWebLink(d.website, d.primaryColor)}</span>` : ""}
       </div>
-      ${d.address ? `<div style="font-size: 11px; color: #64748b; margin-top: 4px;"><span style="font-weight: 700; color: ${d.primaryColor};">${isEn ? "L:" : "U:"}</span> ${d.address}</div>` : ""}
+      ${d.address ? `<div style="font-size: 11px; color: ${d.secondaryColor}; margin-top: 4px;"><span style="font-weight: 700; color: ${d.primaryColor};">${isEn ? "L:" : "U:"}</span> ${d.address}</div>` : ""}
     </td>
   </tr>
   ${d.linkedin || d.github || d.twitter || d.instagram || d.portfolio ? `
@@ -196,7 +196,7 @@ ${RESPONSIVE_EMAIL_CSS}
 <table cellPadding="0" cellSpacing="0" border="0" style="font-family: ${d.fontFamily}; color: ${d.textColor}; font-size: 13px; line-height: 1.4; max-width: 600px;">
   <tr>
     <td style="border-left: 4px solid ${d.primaryColor}; padding-left: 14px;">
-      <div style="font-size: 17px; font-weight: 800; color: ${d.textColor}; line-height: 1.2;">${d.fullName} ${d.pronouns ? `<span style="font-size: 11px; color: #94a3b8; font-weight: normal;">(${d.pronouns})</span>` : ""}</div>
+      <div style="font-size: 17px; font-weight: 800; color: ${d.textColor}; line-height: 1.2;">${d.fullName} ${d.pronouns ? `<span style="font-size: 11px; color: ${d.secondaryColor}; font-weight: normal;">(${d.pronouns})</span>` : ""}</div>
       ${d.jobTitle ? `<div style="font-size: 12px; font-weight: 700; color: ${d.primaryColor}; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px;">${d.jobTitle}</div>` : ""}
       ${d.companyName ? `<div style="font-size: 12px; color: ${d.secondaryColor}; font-weight: 600;">${d.companyName} ${d.department ? `| ${d.department}` : ""}</div>` : ""}
       
@@ -209,7 +209,7 @@ ${RESPONSIVE_EMAIL_CSS}
       </div>
 
       ${d.linkedin || d.github || d.twitter || d.instagram || d.portfolio ? `
-      <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0;">
+      <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid ${d.secondaryColor};">
         ${renderSocialLinks(d)}
       </div>` : ""}
       ${renderStatusBadgeHtml(d)}
@@ -244,7 +244,7 @@ ${RESPONSIVE_EMAIL_CSS}
   </tr>
   <tr>
     <td style="padding: 6px 0 8px 0;">
-      <div style="height: 1px; background-color: #cbd5e1; width: 100%;"></div>
+      <div style="height: 1px; background-color: ${d.secondaryColor}; opacity: 0.3; width: 100%;"></div>
     </td>
   </tr>
   <tr>
@@ -255,7 +255,7 @@ ${RESPONSIVE_EMAIL_CSS}
       ${d.website ? `<span class="sig-item" style="display: inline-block; white-space: nowrap;"><span class="sig-sep" style="color: ${d.primaryColor}; font-weight: bold;">&bull; </span>${renderWebLink(d.website, d.primaryColor)}</span>` : ""}
     </td>
   </tr>
-  ${d.address ? `<tr><td style="font-size: 11px; color: #94a3b8; padding-top: 3px;">${d.address}</td></tr>` : ""}
+  ${d.address ? `<tr><td style="font-size: 11px; color: ${d.secondaryColor}; padding-top: 3px;">${d.address}</td></tr>` : ""}
   ${d.linkedin || d.github || d.twitter || d.instagram || d.portfolio ? `
   <tr>
     <td style="padding-top: 8px;">
@@ -300,10 +300,10 @@ ${RESPONSIVE_EMAIL_CSS}
       </table>
     </td>
     <!-- Vertical Line -->
-    <td style="width: 1px; background-color: #cbd5e1; vertical-align: top;"></td>
+    <td style="width: 1px; background-color: ${d.secondaryColor}; opacity: 0.4; vertical-align: top;"></td>
     <!-- Right Column: Info -->
     <td style="vertical-align: top; padding-left: 16px;">
-      <div style="font-size: 16px; font-weight: 800; color: ${d.textColor}; line-height: 1.2;">${d.fullName} ${d.pronouns ? `<span style="font-size: 11px; color: #94a3b8; font-weight: normal;">(${d.pronouns})</span>` : ""}</div>
+      <div style="font-size: 16px; font-weight: 800; color: ${d.textColor}; line-height: 1.2;">${d.fullName} ${d.pronouns ? `<span style="font-size: 11px; color: ${d.secondaryColor}; font-weight: normal;">(${d.pronouns})</span>` : ""}</div>
       <div style="font-size: 12px; font-weight: 700; color: ${d.primaryColor}; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
         ${d.jobTitle} ${d.companyName ? `&bull; ${d.companyName}` : ""} ${d.department ? `(${d.department})` : ""}
       </div>
@@ -313,7 +313,7 @@ ${RESPONSIVE_EMAIL_CSS}
         ${d.phone ? `<div style="margin-bottom: 3px;"><span style="font-weight: 700; color: ${d.primaryColor};">Tel:</span> ${renderPhoneLink(d.phone, d.textColor)}</div>` : ""}
         ${d.mobile ? `<div style="margin-bottom: 3px;"><span style="font-weight: 700; color: ${d.primaryColor};">${isEn ? "Mobile:" : "Móvil:"}</span> ${renderMobileLink(d.mobile, d.textColor)}</div>` : ""}
         ${d.website ? `<div style="margin-bottom: 3px;"><span style="font-weight: 700; color: ${d.primaryColor};">Web:</span> ${renderWebLink(d.website, d.primaryColor)}</div>` : ""}
-        ${d.address ? `<div style="margin-bottom: 3px;"><span style="font-weight: 700; color: ${d.primaryColor};">${isEn ? "Location:" : "Ubicación:"}</span> <span style="color: #64748b;">${d.address}</span></div>` : ""}
+        ${d.address ? `<div style="margin-bottom: 3px;"><span style="font-weight: 700; color: ${d.primaryColor};">${isEn ? "Location:" : "Ubicación:"}</span> <span style="color: ${d.secondaryColor};">${d.address}</span></div>` : ""}
       </div>
 
       ${d.linkedin || d.github || d.twitter || d.instagram || d.portfolio ? `
@@ -344,17 +344,17 @@ ${RESPONSIVE_EMAIL_CSS}
   <tr>
     <td style="padding-bottom: 6px;">
       <span style="font-size: 16px; font-weight: 800; color: ${d.textColor}; font-family: monospace;">&lt;${d.fullName} /&gt;</span>
-      ${d.pronouns ? `<span style="font-size: 11px; color: #94a3b8; font-family: monospace; margin-left: 6px;">[${d.pronouns}]</span>` : ""}
+      ${d.pronouns ? `<span style="font-size: 11px; color: ${d.secondaryColor}; font-family: monospace; margin-left: 6px;">[${d.pronouns}]</span>` : ""}
     </td>
   </tr>
   <tr>
     <td style="padding-bottom: 8px;">
-      ${d.jobTitle ? `<span style="background-color: #0f172a; color: #f8fafc; font-family: monospace; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 700; letter-spacing: 0.5px;">${d.jobTitle}</span>` : ""}
+      ${d.jobTitle ? `<span style="background-color: ${d.primaryColor}; color: #ffffff; font-family: monospace; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 700; letter-spacing: 0.5px;">${d.jobTitle}</span>` : ""}
       ${d.companyName ? `<span style="font-size: 12px; color: ${d.secondaryColor}; margin-left: 6px; font-weight: 600;">@ ${d.companyName} ${d.department ? `(${d.department})` : ""}</span>` : ""}
     </td>
   </tr>
   <tr>
-    <td style="padding-bottom: 8px; font-size: 12px; color: ${d.secondaryColor}; border-top: 1px solid #cbd5e1; padding-top: 8px; line-height: 1.5;">
+    <td style="padding-bottom: 8px; font-size: 12px; color: ${d.secondaryColor}; border-top: 1px solid ${d.secondaryColor}; padding-top: 8px; line-height: 1.5;">
       ${d.email ? `<div style="margin-bottom: 3px;"><span style="color: ${d.primaryColor}; font-family: monospace; font-weight: bold;">email:</span> ${renderEmailLink(d.email, d.textColor)}</div>` : ""}
       ${d.phone ? `<div style="margin-bottom: 3px;"><span style="color: ${d.primaryColor}; font-family: monospace; font-weight: bold;">tel:</span> ${renderPhoneLink(d.phone, d.textColor)}</div>` : ""}
       ${d.mobile ? `<div style="margin-bottom: 3px;"><span style="color: ${d.primaryColor}; font-family: monospace; font-weight: bold;">mobile:</span> ${renderMobileLink(d.mobile, d.textColor)}</div>` : ""}
@@ -390,7 +390,7 @@ const compactBadge: SignatureTemplate = {
     const isEn = d.language === "en";
     return `
 ${RESPONSIVE_EMAIL_CSS}
-<table cellPadding="0" cellSpacing="0" border="0" style="font-family: ${d.fontFamily}; color: ${d.textColor}; font-size: 12px; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; max-width: 550px;">
+<table cellPadding="0" cellSpacing="0" border="0" style="font-family: ${d.fontFamily}; color: ${d.textColor}; font-size: 12px; border: 1px solid ${d.secondaryColor}; border-radius: 8px; padding: 10px 14px; max-width: 550px;">
   <tr>
     <td>
       <span style="font-weight: 800; font-size: 14px; color: ${d.textColor};">${d.fullName}</span>
@@ -435,10 +435,10 @@ const borderedAccent: SignatureTemplate = {
     const isEn = d.language === "en";
     return `
 ${RESPONSIVE_EMAIL_CSS}
-<table cellPadding="0" cellSpacing="0" border="0" style="font-family: ${d.fontFamily}; color: ${d.textColor}; font-size: 13px; border-top: 1px solid #cbd5e1; border-bottom: 1px solid #cbd5e1; padding: 12px 0; max-width: 600px; width: 100%;">
+<table cellPadding="0" cellSpacing="0" border="0" style="font-family: ${d.fontFamily}; color: ${d.textColor}; font-size: 13px; border-top: 1px solid ${d.secondaryColor}; border-bottom: 1px solid ${d.secondaryColor}; padding: 12px 0; max-width: 600px; width: 100%;">
   <tr>
     <td>
-      <div style="font-size: 17px; font-weight: 800; color: ${d.primaryColor}; letter-spacing: -0.3px;">${d.fullName} ${d.pronouns ? `<span style="font-size: 11px; color: #94a3b8; font-weight: normal;">(${d.pronouns})</span>` : ""}</div>
+      <div style="font-size: 17px; font-weight: 800; color: ${d.primaryColor}; letter-spacing: -0.3px;">${d.fullName} ${d.pronouns ? `<span style="font-size: 11px; color: ${d.secondaryColor}; font-weight: normal;">(${d.pronouns})</span>` : ""}</div>
       <div style="font-size: 13px; font-weight: 700; color: ${d.textColor}; margin-bottom: 6px;">
         ${d.jobTitle} ${d.companyName ? `<span style="color: ${d.secondaryColor}; font-weight: 400;">| ${d.companyName} ${d.department ? `(${d.department})` : ""}</span>` : ""}
       </div>
@@ -483,7 +483,7 @@ ${RESPONSIVE_EMAIL_CSS}
       <span style="font-size: 19px; font-weight: normal; font-style: italic; color: ${d.textColor}; border-bottom: 1px solid ${d.primaryColor}; padding-bottom: 2px;">
         ${d.fullName}
       </span>
-      ${d.pronouns ? `<span style="font-size: 11px; color: #94a3b8; font-style: normal; margin-left: 6px;">(${d.pronouns})</span>` : ""}
+      ${d.pronouns ? `<span style="font-size: 11px; color: ${d.secondaryColor}; font-style: normal; margin-left: 6px;">(${d.pronouns})</span>` : ""}
     </td>
   </tr>
   <tr>
@@ -493,7 +493,7 @@ ${RESPONSIVE_EMAIL_CSS}
     </td>
   </tr>
   <tr>
-    <td style="font-size: 12px; color: #64748b; padding-top: 6px; line-height: 1.6;">
+    <td style="font-size: 12px; color: ${d.secondaryColor}; padding-top: 6px; line-height: 1.6;">
       ${d.email ? `<span class="sig-item" style="display: inline-block; margin-right: 12px; white-space: nowrap;">Email: ${renderEmailLink(d.email, d.textColor)}</span>` : ""}
       ${d.phone ? `<span class="sig-item" style="display: inline-block; margin-right: 12px; white-space: nowrap;">Tel: ${renderPhoneLink(d.phone, d.textColor)}</span>` : ""}
       ${d.mobile ? `<span class="sig-item" style="display: inline-block; margin-right: 12px; white-space: nowrap;">${isEn ? "Mobile:" : "Móvil:"} ${renderMobileLink(d.mobile, d.textColor)}</span>` : ""}
@@ -550,7 +550,7 @@ ${RESPONSIVE_EMAIL_CSS}
     </td>
   </tr>` : ""}
   <tr>
-    <td style="font-size: 12px; color: ${d.secondaryColor}; border-top: 1px solid #e2e8f0; padding-top: 6px; line-height: 1.6;">
+    <td style="font-size: 12px; color: ${d.secondaryColor}; border-top: 1px solid ${d.secondaryColor}; padding-top: 6px; line-height: 1.6;">
       ${d.email ? `<span class="sig-item" style="display: inline-block; margin-right: 14px; white-space: nowrap;">Email: ${renderEmailLink(d.email, d.textColor)}</span>` : ""}
       ${d.phone ? `<span class="sig-item" style="display: inline-block; margin-right: 14px; white-space: nowrap;">Tel: ${renderPhoneLink(d.phone, d.textColor)}</span>` : ""}
       ${d.mobile ? `<span class="sig-item" style="display: inline-block; white-space: nowrap;">${isEn ? "Mobile:" : "Móvil:"} ${renderMobileLink(d.mobile, d.textColor)}</span>` : ""}
@@ -578,19 +578,19 @@ const developerTerminal: SignatureTemplate = {
   renderText: (d) => `$ whoami -> ${d.fullName}\n$ role -> ${d.jobTitle}\n$ contact -> ${d.email}`,
   renderHtml: (d) => `
 ${RESPONSIVE_EMAIL_CSS}
-<table cellPadding="0" cellSpacing="0" border="0" style="font-family: 'Courier New', monospace; color: #334155; font-size: 12px; background-color: #f8fafc; border-left: 3px solid #0f172a; padding: 10px 14px; max-width: 580px; border-radius: 0 6px 6px 0;">
+<table cellPadding="0" cellSpacing="0" border="0" style="font-family: 'Courier New', monospace; color: ${d.textColor}; font-size: 12px; border-left: 3px solid ${d.primaryColor}; padding: 10px 14px; max-width: 580px;">
   <tr>
-    <td style="color: #0f172a; font-weight: bold; font-size: 14px;">
+    <td style="color: ${d.textColor}; font-weight: bold; font-size: 14px;">
       $ whoami &gt; <span style="color: ${d.primaryColor};">${d.fullName}</span>
     </td>
   </tr>
   <tr>
-    <td style="color: #475569; padding-top: 2px;">
+    <td style="color: ${d.secondaryColor}; padding-top: 2px;">
       role: "${d.jobTitle}" ${d.companyName ? `@ ${d.companyName} ${d.department ? `[${d.department}]` : ""}` : ""}
     </td>
   </tr>
   <tr>
-    <td style="color: #64748b; padding-top: 6px; font-size: 11px; line-height: 1.5;">
+    <td style="color: ${d.secondaryColor}; padding-top: 6px; font-size: 11px; line-height: 1.5;">
       ${d.email ? `<div>email: ${renderEmailLink(d.email, d.textColor)}</div>` : ""}
       ${d.phone ? `<div>phone: ${renderPhoneLink(d.phone, d.textColor)}</div>` : ""}
       ${d.mobile ? `<div>mobile: ${renderMobileLink(d.mobile, d.textColor)}</div>` : ""}
