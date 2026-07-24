@@ -217,7 +217,7 @@ function MainDashboard() {
           title="View Release Notes"
         >
           <Sparkles className="w-3 h-3 text-blue-600" />
-          <span>v1.0.0</span>
+          <span>v1.1.0</span>
         </button>
         <span>&bull;</span>
         <span>{t.footerDetails}</span>

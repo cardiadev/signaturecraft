@@ -4,7 +4,7 @@ export const translations = {
   es: {
     appTitle: "SignatureCraft",
     appSubtitle: "Generador Profesional de Firmas HTML para Correo Electrónico",
-    versionBadge: "v1.0.0",
+    versionBadge: "v1.1.0",
     openSource: "Open Source",
     antiSpam: "100% Anti-Spam HTML",
     myProfileData: "Mis Datos",
@@ -97,9 +97,9 @@ export const translations = {
     closeModal: "Cerrar",
 
     // Changelog Modal
-    changelogTitle: "Notas de la Versión SignatureCraft v1.0.0",
-    changelogSubtitle: "Lanzamiento Oficial de Producción",
-    changelogSummary: "SignatureCraft v1.0.0 ofrece un generador de firmas HTML anti-spam con diseño responsivo móvil híbrido, soporte bilingüe i18n y almacenamiento en LocalStorage.",
+    changelogTitle: "Notas de la Versión SignatureCraft v1.1.0",
+    changelogSubtitle: "Actualización de Funcionalidades y Accesibilidad WCAG",
+    changelogSummary: "SignatureCraft v1.1.0 incorpora un visualizador de código inline estilo VSCode, motor de cálculo de contraste WCAG 2.1 con auto-ajuste de tono, diseño fluido panorámico y persistencia 100% en el cliente.",
     changelogClose: "Cerrar Notas de la Versión",
 
     // Footer
@@ -202,9 +202,9 @@ export const translations = {
     closeModal: "Close",
 
     // Changelog Modal
-    changelogTitle: "SignatureCraft v1.0.0 Release Notes",
-    changelogSubtitle: "Official Production Release",
-    changelogSummary: "SignatureCraft v1.0.0 brings an anti-spam HTML email signature generator with hybrid mobile responsiveness, full i18n bilingual support, and LocalStorage persistence.",
+    changelogTitle: "SignatureCraft v1.1.0 Release Notes",
+    changelogSubtitle: "Feature & WCAG Accessibility Release",
+    changelogSummary: "SignatureCraft v1.1.0 brings an inline VSCode-style code viewer, WCAG 2.1 contrast calculation engine with auto-hue adjustment, fluid widescreen layout, and 100% client LocalStorage persistence.",
     changelogClose: "Close Release Notes",
 
     // Footer

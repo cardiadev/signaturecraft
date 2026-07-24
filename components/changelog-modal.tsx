@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X, ShieldCheck, Globe, Code2, Cpu } from "lucide-react";
+import { X, ShieldCheck, Globe, Code2, Cpu, Eye, Palette } from "lucide-react";
 import { Locale, translations } from "@/lib/i18n";
 
 interface ChangelogModalProps {
@@ -21,7 +21,7 @@ export function ChangelogModal({ isOpen, onClose, locale = "en" }: ChangelogModa
         <div className="p-4 border-b border-slate-100 bg-slate-50/90 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
-              v1.0
+              v1.1
             </div>
             <div>
               <h3 className="font-bold text-base text-slate-900">
@@ -32,7 +32,7 @@ export function ChangelogModal({ isOpen, onClose, locale = "en" }: ChangelogModa
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -46,6 +46,22 @@ export function ChangelogModal({ isOpen, onClose, locale = "en" }: ChangelogModa
 
           <div className="space-y-3">
             <div className="flex items-start gap-2.5">
+              <Eye className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-slate-900 block text-xs">VSCode-Style Inline Code Viewer</strong>
+                <p className="text-slate-500">Inline collapsible code box with line numbers, HTML syntax colors (<code className="text-blue-600 font-mono">#569cd6</code>, <code className="text-blue-600 font-mono">#9cdcfe</code>, <code className="text-blue-600 font-mono">#ce9178</code>), and header actions.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2.5">
+              <Palette className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-slate-900 block text-xs">WCAG 2.1 Color Contrast & Auto-Hue Adjustment</strong>
+                <p className="text-slate-500">Real-time WCAG 2.1 contrast calculation for Dark Mode with warning banner and 1-click <code className="text-indigo-600 font-mono">Auto-Adjust Hue</code> button.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-slate-900 block text-xs">100% Anti-Spam (Zero Images & Emojis)</strong>
@@ -54,26 +70,10 @@ export function ChangelogModal({ isOpen, onClose, locale = "en" }: ChangelogModa
             </div>
 
             <div className="flex items-start gap-2.5">
-              <Globe className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+              <Globe className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-slate-900 block text-xs">International i18n & Bilingual Pronouns</strong>
-                <p className="text-slate-500">Instant English and Spanish localization with persistent independent bilingual pronouns (<code className="text-blue-600 font-mono">pronounsEs</code> & <code className="text-blue-600 font-mono">pronounsEn</code>).</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-2.5">
-              <Code2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-slate-900 block text-xs">1-Click WYSIWYG Copying for Gmail</strong>
-                <p className="text-slate-500">Native <code className="text-indigo-600 font-mono">ClipboardItem</code> API & DOM Selection fallback for direct visual pasting in Gmail Settings.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-2.5">
-              <Cpu className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-slate-900 block text-xs">Dual Persistence & JSON Management</strong>
-                <p className="text-slate-500">Automatic synchronization between browser LocalStorage and <code className="text-purple-600 font-mono">data/profile.json</code> with Export/Import backup support.</p>
+                <strong className="text-slate-900 block text-xs">Decoupled i18n & Bilingual Pronouns</strong>
+                <p className="text-slate-500">Topnav language selector controls 100% app UI, while sidebar configures signature defaults independently.</p>
               </div>
             </div>
           </div>
