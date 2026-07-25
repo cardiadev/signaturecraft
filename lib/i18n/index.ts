@@ -20,11 +20,14 @@ export const translations = {
     corporate: "Corporativo",
     technology: "Tecnología",
     creative: "Creativo",
-    resetData: "Restablecer Datos",
+    resetData: "Restablecer",
     resetConfirm: "¿Deseas restablecer todos los datos por defecto?",
     templateDirectory: "Directorio de Firmas HTML (Anti-Spam)",
     templateCount: "10 Plantillas",
     templateSubtext: "Cada plantilla cuenta con su propia vista previa Gmail, modo claro/oscuro y botón de copiado 1-clic.",
+    clickToSelect: "Haz clic para seleccionar",
+    newMessage: "Mensaje nuevo",
+    send: "Enviar",
 
     // Sidebar Sections
     personalInfo: "Información Personal",
@@ -33,6 +36,8 @@ export const translations = {
     styleAndColors: "Estilo y Colores",
     extrasAndLegal: "Insignia de Estado y Aviso Legal",
     languageSelector: "Idioma de la Firma (Language)",
+    spanishLabel: "Español",
+    englishLabel: "Inglés",
     
     // Form Labels
     fullName: "Nombre Completo *",
@@ -109,7 +114,7 @@ export const translations = {
   en: {
     appTitle: "SignatureCraft",
     appSubtitle: "Professional HTML Email Signature Generator",
-    versionBadge: "v1.0.0",
+    versionBadge: "v1.1.0",
     openSource: "Open Source",
     antiSpam: "100% Anti-Spam HTML",
     myProfileData: "My Profile",
@@ -125,11 +130,14 @@ export const translations = {
     corporate: "Corporate",
     technology: "Technology",
     creative: "Creative",
-    resetData: "Reset Data",
+    resetData: "Reset",
     resetConfirm: "Are you sure you want to reset profile data to defaults?",
     templateDirectory: "HTML Signature Directory (Anti-Spam)",
     templateCount: "10 Templates",
     templateSubtext: "Each template features its own Gmail preview window, light/dark mode switch, and 1-click copy button.",
+    clickToSelect: "Click to select",
+    newMessage: "New Message",
+    send: "Send",
 
     // Sidebar Sections
     personalInfo: "Personal Information",
@@ -138,6 +146,8 @@ export const translations = {
     styleAndColors: "Style & Colors",
     extrasAndLegal: "Status Badge & Legal Disclaimer",
     languageSelector: "Signature Language",
+    spanishLabel: "Spanish",
+    englishLabel: "English",
     
     // Form Labels
     fullName: "Full Name *",

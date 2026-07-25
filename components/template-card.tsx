@@ -22,10 +22,12 @@ import {
 import { toast } from "sonner";
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { autoFixForDarkMode } from "@/lib/contrast";
+import { Locale, translations } from "@/lib/i18n";
 
 interface TemplateCardProps {
   template: SignatureTemplate;
   profile: SignatureProfile;
+  appLocale?: Locale;
 }
 
 /**
@@ -53,7 +55,8 @@ function highlightHtmlLine(line: string): string {
   return escaped;
 }
 
-export function TemplateCard({ template, profile }: TemplateCardProps) {
+export function TemplateCard({ template, profile, appLocale = "en" }: TemplateCardProps) {
+  const t = translations[appLocale];
   const [copiedRich, setCopiedRich] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [isEmailDarkMode, setIsEmailDarkMode] = useState(false);
@@ -127,12 +130,12 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
   const handleCopyForGmail = async () => {
     const success = await copyFormattedHtmlToClipboard(renderedHtml, renderedText);
     if (success) {
-      toast.success(`¡Firma "${template.name}" copiada para Gmail!`, {
+      toast.success(t.toastCopyGmailTitle, {
         description: (
           <div className="mt-1.5 space-y-1 text-xs font-medium text-slate-600">
-            <div>1. Ve a <strong>Gmail &gt; Configuración &gt; Ver todos los ajustes &gt; Firma</strong>.</div>
+            <div>{t.toastCopyGmailStep1}</div>
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span>2. Haz clic en la casilla y presiona</span>
+              <span>{t.toastCopyGmailStep2}</span>
               <KbdGroup>
                 <Kbd>⌘</Kbd>
                 <span>/</span>
@@ -145,9 +148,10 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
         ),
         duration: 7000,
       });
+      setCopiedRich(true);
       setTimeout(() => setCopiedRich(false), 2500);
     } else {
-      toast.error("Error al copiar firma");
+      toast.error(appLocale === "es" ? "Error al copiar firma" : "Error copying signature");
     }
   };
 
@@ -156,10 +160,10 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
     try {
       await navigator.clipboard.writeText(renderedHtml);
       setCopiedCode(true);
-      toast.success("Código HTML copiado");
+      toast.success(t.copied);
       setTimeout(() => setCopiedCode(false), 2000);
     } catch (e) {
-      toast.error("Error al copiar código");
+      toast.error(appLocale === "es" ? "Error al copiar código" : "Error copying code");
     }
   };
 
@@ -175,9 +179,9 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      toast.success("Archivo .html descargado");
+      toast.success(appLocale === "es" ? "Archivo .html descargado" : ".html file downloaded");
     } catch (e) {
-      toast.error("Error al descargar archivo");
+      toast.error(appLocale === "es" ? "Error al descargar archivo" : "Error downloading file");
     }
   };
 
@@ -213,7 +217,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
                   ? "bg-blue-600 text-white"
                   : "text-slate-600 hover:text-slate-900"
               }`}
-              title="Idioma de plantilla: Español"
+              title="Español (ES)"
             >
               ES
             </button>
@@ -225,7 +229,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
                   ? "bg-blue-600 text-white"
                   : "text-slate-600 hover:text-slate-900"
               }`}
-              title="Template Language: English"
+              title="English (EN)"
             >
               EN
             </button>
@@ -240,10 +244,10 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
                 ? "bg-slate-800 border-slate-700 text-amber-300"
                 : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
             }`}
-            title={isEmailDarkMode ? "Cambiar a vista de correo clara" : "Probar cómo se ve en modo oscuro de Gmail"}
+            title={isEmailDarkMode ? t.lightMode : t.darkMode}
           >
             {isEmailDarkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-            <span>{isEmailDarkMode ? "Modo Claro" : "Modo Oscuro"}</span>
+            <span>{isEmailDarkMode ? t.lightMode : t.darkMode}</span>
           </button>
 
           {/* Desktop / Mobile View Switcher */}
@@ -256,7 +260,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
                   ? "bg-blue-50 text-blue-600 font-bold"
                   : "text-slate-400 hover:text-slate-600"
               }`}
-              title="Vista de Escritorio"
+              title={t.desktopView}
             >
               <Monitor className="w-4 h-4" />
             </button>
@@ -268,7 +272,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
                   ? "bg-blue-50 text-blue-600 font-bold"
                   : "text-slate-400 hover:text-slate-600"
               }`}
-              title="Vista Móvil"
+              title={t.mobileView}
             >
               <Smartphone className="w-4 h-4" />
             </button>
@@ -295,48 +299,24 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
                 : "bg-[#f2f6fc] border-[#e5e7eb] text-slate-700"
             }`}
           >
-            <span>Mensaje nuevo</span>
+            <span>{t.newMessage}</span>
             <div className="flex items-center gap-2 text-slate-400">
               <span className="cursor-pointer">&mdash;</span>
-              <span className="cursor-pointer">&#x2922;</span>
               <span className="cursor-pointer">&times;</span>
             </div>
           </div>
 
-          {/* Email Fields Mock */}
-          <div
-            className={`px-4 py-2 border-b text-xs space-y-1.5 ${
-              isEmailDarkMode
-                ? "border-slate-800 text-slate-400"
-                : "border-[#f1f3f4] text-[#70757a]"
-            }`}
-          >
-            <div className="py-0.5 font-normal">Destinatarios</div>
-            <div
-              className={`border-t pt-2 pb-0.5 font-normal ${
-                isEmailDarkMode ? "border-slate-800" : "border-[#f1f3f4]"
-              }`}
-            >
-              Asunto
-            </div>
-          </div>
-
           {/* Email Body & Signature Container */}
-          <div
-            className={`p-4 sm:p-5 text-[13px] leading-relaxed space-y-4 min-h-[220px] overflow-x-auto ${
-              isEmailDarkMode ? "bg-[#1e1e1e] text-[#e3e2e6]" : "bg-white text-[#202124]"
-            }`}
-          >
-            <div className="space-y-3 font-sans">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non odio ex. Quisque euismod lacus eget nunc sodales tempor. Quisque eleifend ullamcorper quam, quis rutrum urna viverra non.
-              </p>
-              <p>
-                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam in iaculis dui, vitae bibendum sapien. Aenean tempus leo sed eros porta vulputate.
-              </p>
+          <div className="p-4 sm:p-6 space-y-4">
+            <div className={`space-y-2 text-xs ${isEmailDarkMode ? "text-slate-400" : "text-slate-600"}`}>
+              <div className={`border-b pb-2 ${isEmailDarkMode ? "border-slate-800" : "border-slate-100"}`}>
+                <span className="text-slate-400">To: </span> recipient@company.com
+              </div>
+              <div className={`border-b pb-2 ${isEmailDarkMode ? "border-slate-800" : "border-slate-100"}`}>
+                <span className="text-slate-400">Subject: </span> Professional HTML Email Signature
+              </div>
             </div>
 
-            {/* Authentic Gmail Signature Separator -- */}
             <div className={`pt-2 text-xs ${isEmailDarkMode ? "text-slate-500" : "text-[#70757a]"}`}>
               --
             </div>
@@ -364,7 +344,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
           >
             <div className="flex items-center gap-3">
               <button className="px-4 py-1.5 bg-[#0b57d0] hover:bg-[#0842a0] text-white font-medium text-xs rounded-full flex items-center gap-1.5 shadow-xs cursor-pointer">
-                Enviar <Send className="w-3 h-3" />
+                {t.send} <Send className="w-3 h-3" />
               </button>
               <div className="flex items-center gap-3 text-slate-500">
                 <Paperclip className="w-4 h-4 cursor-pointer hover:text-slate-800" />
@@ -384,7 +364,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
           className="px-3.5 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
         >
           <Code className="w-3.5 h-3.5 text-blue-600" />
-          <span>Ver Código</span>
+          <span>{t.viewCode}</span>
           {isCodeOpen ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
         </button>
 
@@ -396,12 +376,12 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
           {copiedRich ? (
             <>
               <Check className="w-4 h-4" />
-              ¡Firma Copiada!
+              {t.copiedSignature}
             </>
           ) : (
             <>
               <Sparkles className="w-3.5 h-3.5 text-white" />
-              Copiar para Gmail
+              {t.copyForGmail}
             </>
           )}
         </button>
@@ -430,16 +410,16 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
               <button
                 onClick={handleCopyRawHtml}
                 className="px-2.5 py-1 text-[11px] bg-[#333333] hover:bg-[#444444] text-[#cccccc] rounded flex items-center gap-1.5 transition-colors cursor-pointer font-sans font-medium"
-                title="Copiar código HTML crudo"
+                title={t.copyRaw}
               >
                 {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCode ? "¡Copiado!" : "Copiar Raw"}</span>
+                <span>{copiedCode ? t.copied : t.copyRaw}</span>
               </button>
 
               <button
                 onClick={handleDownloadFile}
                 className="px-2.5 py-1 text-[11px] bg-[#333333] hover:bg-[#444444] text-[#cccccc] rounded flex items-center gap-1.5 transition-colors cursor-pointer font-sans font-medium"
-                title="Descargar archivo .html"
+                title={t.downloadHtml}
               >
                 <Download className="w-3.5 h-3.5 text-blue-400" />
                 <span>.HTML</span>
@@ -448,7 +428,7 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
               <button
                 onClick={() => setIsCodeOpen(false)}
                 className="p-1 hover:bg-[#333333] text-[#888888] hover:text-white rounded transition-colors cursor-pointer ml-1"
-                title="Cerrar visor de código"
+                title={t.closeModal}
               >
                 <ChevronUp className="w-4 h-4" />
               </button>
@@ -459,17 +439,13 @@ export function TemplateCard({ template, profile }: TemplateCardProps) {
           <div className="p-4 bg-[#1e1e1e] font-mono text-[11px] leading-relaxed max-h-80 overflow-auto scrollbar-thin">
             <div className="table w-full border-collapse font-mono">
               {htmlLines.map((line, idx) => (
-                <div key={idx} className="table-row leading-5">
-                  {/* Line Numbers Column */}
-                  <span className="table-cell pr-4 text-right text-[#5a5a5a] select-none font-mono text-[11px] w-8">
+                <div key={idx} className="table-row">
+                  <div className="table-cell text-right pr-4 text-[#5a5a5a] select-none font-mono text-[10px] w-8">
                     {idx + 1}
-                  </span>
-                  {/* Syntax Highlighted HTML Line */}
-                  <span
-                    className="table-cell whitespace-pre-wrap break-all text-[#d4d4d4]"
-                    dangerouslySetInnerHTML={{
-                      __html: highlightHtmlLine(line),
-                    }}
+                  </div>
+                  <div
+                    className="table-cell text-[#d4d4d4] font-mono whitespace-pre text-[11px]"
+                    dangerouslySetInnerHTML={{ __html: highlightHtmlLine(line) }}
                   />
                 </div>
               ))}

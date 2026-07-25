@@ -1,32 +1,37 @@
 "use client";
 
 import React from "react";
-import { SignatureProfile, SignatureTemplate } from "@/lib/templates/types";
+import { SignatureProfile } from "@/lib/templates/types";
 import { TEMPLATES } from "@/lib/templates";
-import { Check, LayoutGrid, Sparkles } from "lucide-react";
+import { Check, LayoutGrid } from "lucide-react";
+import { Locale, translations } from "@/lib/i18n";
 
 interface SignatureGalleryProps {
   profile: SignatureProfile;
   selectedTemplateId: string;
   onSelectTemplate: (templateId: string) => void;
+  appLocale?: Locale;
 }
 
 export function SignatureGallery({
   profile,
   selectedTemplateId,
   onSelectTemplate,
+  appLocale = "en",
 }: SignatureGalleryProps) {
+  const t = translations[appLocale];
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xs p-4 flex flex-col h-full">
       <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <LayoutGrid className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           <h2 className="font-bold text-sm text-slate-900 dark:text-slate-100">
-            Directorio de 10 Plantillas HTML (Anti-Spam)
+            {t.templateDirectory}
           </h2>
         </div>
         <span className="text-xs text-slate-500 font-medium">
-          Haz clic para seleccionar
+          {t.clickToSelect}
         </span>
       </div>
 

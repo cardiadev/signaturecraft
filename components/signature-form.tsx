@@ -382,7 +382,7 @@ export function SignatureForm({
                         : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
-                    <span>Spanish (ES)</span>
+                    <span>{t.spanishLabel}</span>
                   </button>
                   <button
                     type="button"
@@ -393,7 +393,7 @@ export function SignatureForm({
                         : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
-                    <span>English (EN)</span>
+                    <span>{t.englishLabel}</span>
                   </button>
                 </div>
               </div>
@@ -1018,7 +1018,7 @@ export function SignatureForm({
       </div>
 
       {/* Bottom Sticky Save Bar with Export / Import JSON & Reset Data */}
-      <div className="p-4 border-t border-slate-200 bg-white shrink-0 flex flex-col gap-2.5 shadow-md">
+      <div className="p-4 pb-5 border-t border-slate-200 bg-white shrink-0 flex flex-col gap-2.5 shadow-md">
         <div className="flex items-center justify-between text-[11px] text-slate-500">
           <span>{t.localServerSync}</span>
         </div>
