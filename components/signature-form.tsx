@@ -117,9 +117,25 @@ export function SignatureForm({
   };
 
   const updateField = (field: keyof SignatureProfile, value: any) => {
+    const isEs = (profile.language || "es") === "es";
+    let extraFields: Partial<SignatureProfile> = {};
+
+    if (field === "jobTitle") {
+      extraFields = isEs ? { jobTitleEs: value } : { jobTitleEn: value };
+    } else if (field === "department") {
+      extraFields = isEs ? { departmentEs: value } : { departmentEn: value };
+    } else if (field === "statusBadge") {
+      extraFields = isEs ? { statusBadgeEs: value } : { statusBadgeEn: value };
+    } else if (field === "disclaimer") {
+      extraFields = isEs ? { disclaimerEs: value } : { disclaimerEn: value };
+    } else if (field === "pronouns") {
+      extraFields = isEs ? { pronounsEs: value } : { pronounsEn: value };
+    }
+
     onChange({
       ...profile,
       [field]: value,
+      ...extraFields,
     });
   };
 
@@ -132,30 +148,64 @@ export function SignatureForm({
 
   const handleLanguageSwitch = (lang: "es" | "en") => {
     if (lang === "en") {
+      // Preserve current ES fields before switching
+      const updatedEs = {
+        jobTitleEs: profile.jobTitleEs || profile.jobTitle || "Ingeniero de Software Senior",
+        departmentEs: profile.departmentEs || profile.department || "Ingeniería",
+        statusBadgeEs: profile.statusBadgeEs || profile.statusBadge || "● Abierto a oportunidades laborales",
+        disclaimerEs: profile.disclaimerEs || profile.disclaimer || DISCLAIMER_PRESETS[0].value,
+        pronounsEs: profile.pronounsEs || profile.pronouns || "Él / Him",
+      };
+
+      const newJobTitle = profile.jobTitleEn || (profile.jobTitle === "Ingeniero de Software Senior" ? "Senior Software Engineer" : profile.jobTitle);
+      const newDept = profile.departmentEn || (profile.department === "Ingeniería" ? "Engineering" : profile.department);
+      const newBadge = profile.statusBadgeEn || (profile.statusBadge.includes("Abierto") ? "● Open to new career opportunities" : profile.statusBadge);
+      const newDisclaimer = profile.disclaimerEn || (profile.disclaimer.includes("Este correo") ? DISCLAIMER_PRESETS[1].value : profile.disclaimer);
+      const newPronouns = profile.pronounsEn || "He / Him";
+
       updateMultipleFields({
+        ...updatedEs,
         language: "en",
-        pronouns: profile.pronounsEn || "He / Him",
-        statusBadge:
-          profile.statusBadge.includes("Abierto") || !profile.statusBadge
-            ? "● Open to new career opportunities"
-            : profile.statusBadge,
-        disclaimer:
-          profile.disclaimer === DISCLAIMER_PRESETS[0].value || !profile.disclaimer
-            ? DISCLAIMER_PRESETS[1].value
-            : profile.disclaimer,
+        jobTitle: newJobTitle,
+        department: newDept,
+        statusBadge: newBadge,
+        disclaimer: newDisclaimer,
+        pronouns: newPronouns,
+        jobTitleEn: newJobTitle,
+        departmentEn: newDept,
+        statusBadgeEn: newBadge,
+        disclaimerEn: newDisclaimer,
+        pronounsEn: newPronouns,
       });
     } else {
+      // Preserve current EN fields before switching
+      const updatedEn = {
+        jobTitleEn: profile.jobTitleEn || profile.jobTitle || "Senior Software Engineer",
+        departmentEn: profile.departmentEn || profile.department || "Engineering",
+        statusBadgeEn: profile.statusBadgeEn || profile.statusBadge || "● Open to new career opportunities",
+        disclaimerEn: profile.disclaimerEn || profile.disclaimer || DISCLAIMER_PRESETS[1].value,
+        pronounsEn: profile.pronounsEn || profile.pronouns || "He / Him",
+      };
+
+      const newJobTitle = profile.jobTitleEs || (profile.jobTitle === "Senior Software Engineer" ? "Ingeniero de Software Senior" : profile.jobTitle);
+      const newDept = profile.departmentEs || (profile.department === "Engineering" ? "Ingeniería" : profile.department);
+      const newBadge = profile.statusBadgeEs || (profile.statusBadge.includes("Open") ? "● Abierto a oportunidades laborales" : profile.statusBadge);
+      const newDisclaimer = profile.disclaimerEs || (profile.disclaimer.includes("This email") ? DISCLAIMER_PRESETS[0].value : profile.disclaimer);
+      const newPronouns = profile.pronounsEs || "Él / Him";
+
       updateMultipleFields({
+        ...updatedEn,
         language: "es",
-        pronouns: profile.pronounsEs || "Él / Him",
-        statusBadge:
-          profile.statusBadge.includes("Open") || !profile.statusBadge
-            ? "● Abierto a oportunidades laborales"
-            : profile.statusBadge,
-        disclaimer:
-          profile.disclaimer === DISCLAIMER_PRESETS[1].value || !profile.disclaimer
-            ? DISCLAIMER_PRESETS[0].value
-            : profile.disclaimer,
+        jobTitle: newJobTitle,
+        department: newDept,
+        statusBadge: newBadge,
+        disclaimer: newDisclaimer,
+        pronouns: newPronouns,
+        jobTitleEs: newJobTitle,
+        departmentEs: newDept,
+        statusBadgeEs: newBadge,
+        disclaimerEs: newDisclaimer,
+        pronounsEs: newPronouns,
       });
     }
   };
@@ -983,24 +1033,24 @@ export function SignatureForm({
           <span>{isSaved ? t.savedSuccess : t.saveChanges}</span>
         </button>
 
-        {/* Action Row: Export JSON, Import JSON & Reset Data */}
+        {/* Action Row: Export, Import & Reset */}
         <div className="grid grid-cols-3 gap-1.5 pt-1">
           <button
             type="button"
             onClick={handleExportJson}
-            className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[11px] rounded-lg border border-slate-200 flex items-center justify-center gap-1 transition-colors cursor-pointer"
-            title={t.exportJson}
+            className="py-2 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            title={appLocale === "es" ? "Exportar todos los datos (Español e Inglés)" : "Export full data (Spanish & English)"}
           >
-            <Download className="w-3.5 h-3.5 text-blue-600" />
+            <Download className="w-3.5 h-3.5 text-blue-600 shrink-0" />
             <span className="truncate">{t.exportJson}</span>
           </button>
           <button
             type="button"
             onClick={handleImportJsonClick}
-            className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[11px] rounded-lg border border-slate-200 flex items-center justify-center gap-1 transition-colors cursor-pointer"
-            title={t.importJson}
+            className="py-2 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            title={appLocale === "es" ? "Importar perfil de respaldo JSON" : "Import JSON profile backup"}
           >
-            <Upload className="w-3.5 h-3.5 text-indigo-600" />
+            <Upload className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
             <span className="truncate">{t.importJson}</span>
           </button>
           <button
@@ -1016,10 +1066,10 @@ export function SignatureForm({
                 toast.success("Profile reset to defaults");
               }
             }}
-            className="py-1.5 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-[11px] rounded-lg border border-rose-200 flex items-center justify-center gap-1 transition-colors cursor-pointer"
-            title={t.resetData}
+            className="py-2 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            title={appLocale === "es" ? "Restablecer todos los datos por defecto" : "Reset profile to default data"}
           >
-            <RotateCcw className="w-3.5 h-3.5 text-rose-600" />
+            <RotateCcw className="w-3.5 h-3.5 text-rose-600 shrink-0" />
             <span className="truncate">{t.resetData}</span>
           </button>
         </div>

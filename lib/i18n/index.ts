@@ -65,8 +65,8 @@ export const translations = {
     // Actions & Buttons
     saveChanges: "Guardar Cambios",
     savedSuccess: "¡Guardado con Éxito!",
-    exportJson: "Exportar JSON",
-    importJson: "Importar JSON",
+    exportJson: "Exportar",
+    importJson: "Importar",
     copyForGmail: "Copiar para Gmail",
     copiedSignature: "¡Firma Copiada!",
     copyRaw: "Copiar Raw",
@@ -170,8 +170,8 @@ export const translations = {
     // Actions & Buttons
     saveChanges: "Save Changes",
     savedSuccess: "Saved Successfully!",
-    exportJson: "Export JSON",
-    importJson: "Import JSON",
+    exportJson: "Export",
+    importJson: "Import",
     copyForGmail: "Copy for Gmail",
     copiedSignature: "Signature Copied!",
     copyRaw: "Copy Raw",

@@ -5,8 +5,12 @@ export interface SignatureProfile {
   // Personal & Company Details
   fullName: string;
   jobTitle: string;
+  jobTitleEs?: string;
+  jobTitleEn?: string;
   companyName: string;
   department: string;
+  departmentEs?: string;
+  departmentEn?: string;
   pronouns: string;
   pronounsEs: string;
   pronounsEn: string;
@@ -37,9 +41,13 @@ export interface SignatureProfile {
   textColor: string; // Base text color (Hex e.g. #1e293b)
   fontFamily: "Arial, sans-serif" | "Helvetica, sans-serif" | "Georgia, serif" | "Tahoma, sans-serif" | "Trebuchet MS, sans-serif" | "Verdana, sans-serif" | "Courier New, monospace";
 
-  // Additional elements
+  // Additional elements (Bilingual support for full JSON export/import)
   statusBadge: string; // e.g., "● Open to new career opportunities"
+  statusBadgeEs?: string;
+  statusBadgeEn?: string;
   disclaimer: string; // Legal or confidentiality notice
+  disclaimerEs?: string;
+  disclaimerEn?: string;
 }
 
 export interface SignatureTemplate {
@@ -55,8 +63,12 @@ export const DEFAULT_PROFILE: SignatureProfile = {
   language: "en",
   fullName: "Alex Morgan",
   jobTitle: "Senior Software Engineer",
+  jobTitleEs: "Ingeniero de Software Senior",
+  jobTitleEn: "Senior Software Engineer",
   companyName: "Acme Innovations Inc.",
   department: "Engineering",
+  departmentEs: "Ingeniería",
+  departmentEn: "Engineering",
   pronouns: "He / Him",
   pronounsEs: "Él / Him",
   pronounsEn: "He / Him",
@@ -79,5 +91,9 @@ export const DEFAULT_PROFILE: SignatureProfile = {
   textColor: "#1e293b",
   fontFamily: "Arial, sans-serif",
   statusBadge: "● Open to new career opportunities",
+  statusBadgeEs: "● Abierto a oportunidades laborales",
+  statusBadgeEn: "● Open to new career opportunities",
   disclaimer: "This email and any attachments are confidential and intended solely for the recipient. If received in error, please notify the sender immediately and delete this message.",
+  disclaimerEs: "Este correo electrónico y sus anexos son confidenciales y están dirigidos únicamente a su destinatario. Si lo recibió por error, notifique inmediatamente al remitente y elimine el mensaje.",
+  disclaimerEn: "This email and any attachments are confidential and intended solely for the recipient. If received in error, please notify the sender immediately and delete this message.",
 };

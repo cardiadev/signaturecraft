@@ -14,7 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **Fluid Widescreen Layout**: Upgraded top navigation header and dashboard layout to 100% fluid widescreen (`w-full px-4 sm:px-6 lg:px-8`).
 - **Decoupled i18n System**: Topnav language selector controls 100% of global app UI, while sidebar language selector controls signature profile defaults independently.
 - **Full Viewport Mobile Sidebar**: Mobile sidebar expands to 100% viewport (`w-full h-full inset-0 z-50`).
-- **Reset Data Option**: Added `Reset Data` button (`<RotateCcw />`) in sidebar for 1-click profile restoration.
+- **Multi-Language JSON Export/Import**: Export and import operations now preserve 100% of profile settings across all supported languages (`jobTitleEs`/`jobTitleEn`, `statusBadgeEs`/`statusBadgeEn`, `disclaimerEs`/`disclaimerEn`, `pronounsEs`/`pronounsEn`).
+- **Polished Sidebar Action Labels**: Streamlined action button labels (`Exportar`, `Importar`, `Restablecer`) with native tooltips for zero text truncation.
 - **Pure LocalStorage Persistence**: Transitioned to 100% client LocalStorage persistence for static deployment compatibility.
 
 ### Changed
