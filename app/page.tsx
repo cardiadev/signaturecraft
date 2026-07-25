@@ -20,7 +20,7 @@ import { Search, Filter, Sparkles } from "lucide-react";
 function MainDashboard() {
   const [profile, setProfile] = useState<SignatureProfile>(DEFAULT_PROFILE);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [isChangelogOpen, setIsChangelogOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { open, toggleSidebar } = useSidebar();
@@ -74,20 +74,23 @@ function MainDashboard() {
   const t = translations[appLocale];
 
   const categories = useMemo(() => {
-    const cats = new Set(TEMPLATES.map((tmpl) => tmpl.category));
-    return [t.allCategories, ...Array.from(cats)];
+    const rawCats = Array.from(new Set(TEMPLATES.map((tmpl) => tmpl.category)));
+    return [
+      { id: "ALL", label: t.allCategories },
+      ...rawCats.map((cat) => ({ id: cat, label: cat })),
+    ];
   }, [t.allCategories]);
 
   const filteredTemplates = useMemo(() => {
     return TEMPLATES.filter((tmpl) => {
       const matchesCategory =
-        selectedCategory === t.allCategories || tmpl.category === selectedCategory;
+        selectedCategory === "ALL" || tmpl.category === selectedCategory;
       const matchesSearch =
         tmpl.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tmpl.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, selectedCategory, t.allCategories]);
+  }, [searchQuery, selectedCategory]);
 
   if (!mounted) return null;
 
@@ -139,15 +142,15 @@ function MainDashboard() {
                   <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   {categories.map((cat) => (
                     <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
                       className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap cursor-pointer ${
-                        selectedCategory === cat
+                        selectedCategory === cat.id
                           ? "bg-blue-600 text-white shadow-xs"
                           : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
                       }`}
                     >
-                      {cat}
+                      {cat.label}
                     </button>
                   ))}
                 </div>
@@ -184,7 +187,7 @@ function MainDashboard() {
                   </p>
                   <button
                     onClick={() => {
-                      setSelectedCategory(t.allCategories);
+                      setSelectedCategory("ALL");
                       setSearchQuery("");
                     }}
                     className="text-xs text-blue-600 font-semibold hover:underline cursor-pointer"
